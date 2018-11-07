@@ -1,25 +1,29 @@
 package racing.domain;
 
+import racing.utils.RandomMoveGenerator;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class RacingGame {
-    private RandomMoveGenerator moveNumberGenerator = null;
     private int times;
     private List<RacingCar> cars = null;
 
-    private final int FINISH = 0;
+    private  final int MAX_MOVE_SIZE = 10;
+    private final String SEPERATOR = ",";
 
-    public RacingGame(int times, String[] carNames) {
+    public RacingGame(int times, String carNames) {
+        if (carNames == null || carNames.length() == 0) {
+            throw new IllegalArgumentException("자동차 이름이 반드시 필요합니다.");
+        }
         this.times = times;
         readyRacingCars(carNames);
-        this.moveNumberGenerator = new RandomMoveGenerator();
     }
 
-    private void readyRacingCars(String[] carNames) {
+    private void readyRacingCars(String carNames) {
         cars = new ArrayList<>();
-        for (String name: carNames) {
+        for (String name: carNames.split(SEPERATOR)) {
             cars.add(new RacingCar(name));
         }
     }
@@ -39,13 +43,8 @@ public class RacingGame {
 
     private void moveCars() {
         for (RacingCar car : cars) {
-            int drivingForce = generateMoveNumber();
-            car.move(drivingForce);
+            car.move(generateMoveNumber());
         }
-    }
-
-    public void setMoveNumberGenerator(RandomMoveGenerator moveNumberGenerator) {
-        this.moveNumberGenerator = moveNumberGenerator;
     }
 
     public List<RacingCar> getResultOfTheGame() {
@@ -53,7 +52,7 @@ public class RacingGame {
     }
 
     public boolean isFinish() {
-        return times == FINISH;
+        return times == 0;
     }
 
     private void decreaseTimes() {
@@ -61,6 +60,6 @@ public class RacingGame {
     }
 
     private int generateMoveNumber() {
-        return moveNumberGenerator.generate();
+        return RandomMoveGenerator.nextInt(MAX_MOVE_SIZE);
     }
 }

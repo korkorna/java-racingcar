@@ -17,9 +17,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebMain {
 
     public static void main(String[] args) {
-
         webServerConfigure();
-
         routes();
     }
 
@@ -39,11 +37,10 @@ public class WebMain {
 
         get("/result", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            
             int times = Integer.parseInt(req.queryParams("turn"));
             String names = UrlEncoded.decodeString(req.cookie("cars"));
 
-            RacingGame racingGame = new RacingGame(times, names.split(" "));
+            RacingGame racingGame = new RacingGame(times, names);
             
             while (!racingGame.isFinish()) {
                 racingGame.move();

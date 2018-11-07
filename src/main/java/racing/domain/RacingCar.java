@@ -11,7 +11,9 @@ public class RacingCar {
     }
     
     public RacingCar(String name, int position) {
-        super();
+        if (name == null || name.length() == 0) {
+            throw new IllegalArgumentException("자동차 이름이 반드시 필요합니다.");
+        }
         this.name = name;
         this.position = position;
     }
@@ -26,12 +28,8 @@ public class RacingCar {
 
     public void move(int drivingForce) {
         if (canMove(drivingForce)) {
-            moveOneSpace();
+            position++;
         }
-    }
-
-    private void moveOneSpace() {
-        position++;
     }
 
     private boolean canMove(int drivingForce) {

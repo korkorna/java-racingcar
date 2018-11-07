@@ -11,7 +11,7 @@ public class RacingGameTest {
 
     private RacingGame game;
 
-    private final String[] carNames = new String[] {"pobi", "crong", "honux"};
+    private final String carNames = "pobi,crong,honux";
     private final int times = 2;
 
     @Before
@@ -24,7 +24,7 @@ public class RacingGameTest {
         gameStart();
 
         assertThat(game.isFinish()).isTrue();
-        assertThat(game.getResultOfTheGame().size()).isEqualTo(carNames.length);
+        assertThat(game.getResultOfTheGame().size()).isEqualTo(3);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class RacingGameTest {
         game.move();
 
         assertThat(game.isFinish()).isFalse();
-        assertThat(game.getResultOfTheGame().size()).isEqualTo(carNames.length);
+        assertThat(game.getResultOfTheGame().size()).isEqualTo(3);
     }
 
     @Test
